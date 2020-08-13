@@ -1,19 +1,22 @@
 {
   "name": "electron-demo",
   "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
+  "description": "Electron + Vite",
+  "main": "build/main.js",
   "scripts": {
-    "start": "electron .",
-    "dist": "electron-builder"
+    "dev": "node dev.js",
+    "build": "node build.js && electron-builder"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["electron", "vue", "vite"],
+  "author": "baoanj",
   "license": "ISC",
   "build": {
     "appId": "com.baoanj.electron.demo",
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "files": [
+        "build/**"
+      ]
     },
     "nsis": {
       "oneClick": false,
@@ -22,11 +25,16 @@
     }
   },
   "postinstall": "electron-builder install-app-deps",
-  "devDependencies": {
-    "electron": "^6.0.10",
-    "electron-builder": "^21.2.0"
-  },
   "dependencies": {
-    "lowdb": "^1.0.0"
+    "lowdb": "^1.0.0",
+    "vue": "^3.0.0-rc.5"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.0.0-rc.5",
+    "electron": "^9.2.0",
+    "electron-builder": "^21.2.0",
+    "esbuild": "^0.6.20",
+    "vite": "^1.0.0-rc.4",
+    "webpack": "^4.44.1"
   }
 }

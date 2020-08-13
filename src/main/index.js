@@ -2,11 +2,22 @@
 // electron.app 负责管理 Electron 应用程序的生命周期
 // electron.BrowserWindow 负责创建窗口
 
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
+require('./ipc')
+
+const DEV = process.env.NODE_ENV === 'development'
+
+if (!DEV) {
+  Menu.setApplicationMenu(null)
+}
 
 // 保持对 window 对象的全局引用，如果不这么做的话，当 JavaScript 对象被
 // 垃圾回收的时候，window 对象将会自动的关闭。
 let win
+
+const winURL = DEV
+  ? 'http://localhost:8090'
+  : `file://${__dirname}/index.html`
 
 function createWindow() {
   // 创建浏览器窗口
@@ -18,8 +29,8 @@ function createWindow() {
     }
   })
 
-  // 加载 index.html 文件
-  win.loadFile('render/index.html')
+  // 加载页面
+  win.loadURL(winURL)
 
   // 打开开发者工具
   // win.webContents.openDevTools()

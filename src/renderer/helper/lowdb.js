@@ -1,3 +1,4 @@
+const fs = require('fs')
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 
@@ -11,7 +12,7 @@ const db = low(adapter)
 // Set some defaults (required if your JSON file is empty)
 db.defaults({ todos: [], count: 0 }).write()
 
-function addTodo(title) {
+export function addTodo(title) {
   const id = db.get('count').value() + 1
 
   db.get('todos').push({ id, title, date: Date.now() }).write()
@@ -20,11 +21,6 @@ function addTodo(title) {
   db.update('count', n => n + 1).write()
 }
 
-function getTodos() {
+export function getTodos() {
   return db.get('todos').value()
-}
-
-module.exports = {
-  addTodo,
-  getTodos
 }
